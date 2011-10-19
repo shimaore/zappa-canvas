@@ -3,6 +3,7 @@
 require('zappa') ->
   @enable 'default layout', 'serve jquery',
     'serve sammy' # , 'minify'
+  @use 'static'
 
   @get '/': ->
     @render 'index'
@@ -234,6 +235,10 @@ require('zappa') ->
       '/zappa/sammy', '/zappa/zappa', '/shared', '/index']
     @stylesheets = ['/index']
 
+    # Jquery UI (colorpicker)
+    push @scripts, 'js/jquery-ui-1.8.16.custom.min'
+    push @stylesheets, 'css/smoothness/jquery-ui-1.8.16.custom'
+
     h1 @title
     div class:'board', ->
       canvas width:1000, height:300, id:'canvas'
@@ -244,6 +249,7 @@ require('zappa') ->
     a href:'#/draw', 'Draw'
     a href:'#/text', 'Text'
 
+    # colorpicker
     div id:'colorpicker', ->
       div id:'red'
       div id:'green'
