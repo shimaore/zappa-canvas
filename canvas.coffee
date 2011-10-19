@@ -30,11 +30,17 @@ require('zappa') ->
     @broadcast 'run commands': {commands:[command]}
 
   @on 'canvas undo': ->
+    if history.length <= 1
+      @emit log: {text: "Nothing to undo"}
+      return
     redo.push history.pop()
     @broadcast 'run commands': {commands:history}
     @emit      'run commands': {commands:history}
 
   @on 'canvas redo': ->
+    if redo.length < 1
+      @emit log: {text: "Nothing to redo"}
+      return
     command = redo.pop()
     history.push command
     @broadcast 'run commands': {commands:command}
