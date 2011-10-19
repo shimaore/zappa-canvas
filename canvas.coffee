@@ -121,7 +121,11 @@ require('zappa') ->
       log @data.text
 
     @on said: ->
-      log "#{@data.nickname} said: #{@data.text}"
+      log """
+        <span class="author">#{@data.nickname}</span>
+        said:
+        <span class="message">#{@data.text}</span>
+      """
 
     @get '#/': =>
 
@@ -169,6 +173,8 @@ require('zappa') ->
   @css '/index.css': '''
     canvas { border: 1px solid black; }
     a { margin: 2px; }
+    .author { font-style: italic; }
+    .message { font-weight: bold; }
   '''
 
   @view index: ->
