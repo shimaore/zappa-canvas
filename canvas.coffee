@@ -223,11 +223,11 @@ require('zappa') ->
     .author { font-style: italic; }
     .message { font-weight: bold; }
     #chat {
+      width: 400px;
       background-color: #f6f8ff;
     }
     #roster {
       float: right;
-      clear: right;
       background-color: #f2ffe7;
     }
 
@@ -314,11 +314,10 @@ require('zappa') ->
           $( "#green" ).slider( "value", 140 )
           $( "#blue" ).slider( "value", 60 )
 
+    div id:'roster'
 
     div id:'chat', ->
       form ->
         input id: 'box'
         button 'Send'
       div id:'log'
-
-    div id:'roster'
