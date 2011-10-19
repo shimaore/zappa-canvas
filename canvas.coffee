@@ -28,6 +28,17 @@ require('zappa') ->
     history.push command
     @broadcast 'run commands': {commands:[command]}
 
+  @on 'canvas undo': ->
+    redo.push history.pop()
+    @broadcast 'run commands': {commands:history}
+    @emit      'run commands': {commands:history}
+
+  @on 'canvas redo': ->
+    command = redo.pop()
+    history.push command
+    @broadcast 'run commands': {commands:command}
+    @emit      'run commands': {commands:command}
+
   # Chat Server (based on zappa's chat example)
   @on 'set nickname': ->
     @client.nickname = @data.nickname
