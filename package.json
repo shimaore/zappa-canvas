@@ -7,7 +7,7 @@
   , "url": "git://stephane.shimaore.net/git/zappa-canvas.git"
   }
 , "dependencies": {
-    "zappa": "*"
+    "zappa": ">=0.3.1"
   }
 , "engines": {
     "coffee": ">=1.1.2"
