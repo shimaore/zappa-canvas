@@ -21,7 +21,6 @@ require('zappa') ->
       @emit 'request nickname': {}
     roster[@id] = @client.nickname or '(unknown)'
     @emit 'run commands': {commands:history}
-    @broadcast roster: {roster:roster}
 
   @on disconnect: ->
     console.log "Client #{@id} disconnected"
@@ -70,6 +69,7 @@ require('zappa') ->
     roster[@id] = @data.nickname
     console.log "#{@client.nickname} connected"
     @broadcast roster: {roster:roster}
+    @emit      roster: {roster:roster}
     @broadcast log: {text: "#{@client.nickname} connected"}
     @emit      log: {text: "#{@client.nickname} connected"}
 
