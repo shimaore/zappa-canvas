@@ -219,6 +219,7 @@ require('zappa') ->
     a, span#undo, span#redo { margin: 2px; }
     .author { font-style: italic; }
     .message { font-weight: bold; }
+    #roster { float: right; }
 
     /* colorpicker */
     #colorpicker {
