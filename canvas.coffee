@@ -48,8 +48,8 @@ require('zappa') ->
       return
     command = redo.pop()
     history.push command
-    @broadcast 'run commands': {commands:command}
-    @emit      'run commands': {commands:command}
+    @broadcast 'run commands': {commands:[command]}
+    @emit      'run commands': {commands:[command]}
 
   # Chat Server (based on zappa's chat example)
   @on 'set nickname': ->
@@ -161,6 +161,16 @@ require('zappa') ->
         @emit 'canvas line': {from:from,to:to}
         render_command do:'line',from:from,to:to
 
+      $('#undo').click =>
+        console.log 'undo'
+        @emit 'canvas undo': {}
+        return false
+
+      $('#redo').click =>
+        console.log 'redo'
+        @emit 'canvas redo': {}
+        return false
+
       # Chat
       @emit 'set nickname': {nickname: prompt 'Pick a nickname!'}
 
@@ -173,12 +183,6 @@ require('zappa') ->
 
     @get '#/clear': =>
       @emit 'canvas clear': {}
-
-    @get '#/undo': =>
-      @emit 'canvas undo': {}
-
-    @get '#/redo': =>
-      @emit 'canvas redo': {}
 
     @get '#/draw': ->
       # Select drawing tool
@@ -195,7 +199,7 @@ require('zappa') ->
 
   @css '/index.css': '''
     canvas { border: 1px solid black; }
-    a { margin: 2px; }
+    a, span#undo, span#redo { margin: 2px; }
     .author { font-style: italic; }
     .message { font-weight: bold; }
   '''
@@ -211,8 +215,8 @@ require('zappa') ->
       canvas width:1000, height:300, id:'canvas'
 
     a href:'#/clear', 'Clear'
-    a href:'#/undo', 'Undo'
-    a href:'#/redo', 'Redo'
+    span id:'undo', 'Undo'
+    span id:'redo', 'Redo'
     a href:'#/draw', 'Draw'
     a href:'#/text', 'Text'
 
