@@ -17,6 +17,10 @@ require('zappa') ->
     console.log "Client #{@id} connected"
     @emit 'run commands': {commands:history}
 
+  @on disconnect: ->
+    console.log "Client #{@id} disconnected"
+    delete @client.nickname
+
   @on 'canvas clear': ->
     history = [{do:'wipe'}]
     @broadcast 'run commands': {commands:history}
@@ -125,6 +129,9 @@ require('zappa') ->
 
     @on connection: ->
       log "Connected as #{@id}"
+
+    @on disconnect: ->
+      log "Disconnected"
 
     @on log: ->
       log @data.text
