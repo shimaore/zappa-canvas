@@ -208,6 +208,10 @@ require('zappa') ->
     .author { font-style: italic; }
     .message { font-weight: bold; }
 
+    /* colorpicker */
+    #colorpicker: {
+      float: right;
+    }
     #red, #green, #blue {
       float: left;
       clear: left;
@@ -288,7 +292,8 @@ require('zappa') ->
           $( "#blue" ).slider( "value", 60 )
 
 
-    form ->
-      input id: 'box'
-      button 'Send'
-    div id:'log'
+    div id:'chat', ->
+      form ->
+        input id: 'box'
+        button 'Send'
+      div id:'log'
