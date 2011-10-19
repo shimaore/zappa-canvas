@@ -1,6 +1,6 @@
 {
   "name": "zappa-canvas"
-, "version": "0.0.1"
+, "version": "0.0.2"
 , "description": "A shared whiteboard and chat application using Zappa"
 , "repository": {
     "type": "git"
