@@ -30,7 +30,12 @@ require('zappa') ->
     @emit      log: {text:"Cleared by #{@client.nickname}!"}
 
   @on 'canvas line': ->
-    command = do:'line',from:@data.from,to:@data.to,author:@client.nickname
+    command =
+      do:'line'
+      from:@data.from
+      to:@data.to
+      color:@data.color
+      author:@client.nickname
     history.push command
     @broadcast 'run commands': {commands:[command]}
 
@@ -115,7 +120,7 @@ require('zappa') ->
           canvas_ctx.clearRect(0,0,canvas_width,canvas_height)
 
         when 'line'
-          canvas_ctx.strokeStyle = '#df4b26'
+          canvas_ctx.strokeStyle = '#' + command.color
           canvas_ctx.lineJoin = 'round'
           canvas_ctx.lineWidth = 5
 
@@ -158,8 +163,9 @@ require('zappa') ->
           log 'Canvas is not supported'
 
       $('#canvas').draw (from,to) =>
-        @emit 'canvas line': {from:from,to:to}
-        render_command do:'line',from:from,to:to
+        color = $('#swatch').data 'value'
+        @emit 'canvas line': {from:from,to:to,color:color}
+        render_command do:'line',from:from,to:to,color:color
 
       $('#undo').click =>
         @emit 'canvas undo': {}
@@ -200,6 +206,26 @@ require('zappa') ->
     a, span#undo, span#redo { margin: 2px; }
     .author { font-style: italic; }
     .message { font-weight: bold; }
+
+    #red, #green, #blue {
+      float: left;
+      clear: left;
+      width: 300px;
+      margin: 15px;
+    }
+    #swatch {
+      width: 120px;
+      height: 100px;
+      margin-top: 18px;
+      margin-left: 350px;
+      background-image: none;
+    }
+    #red .ui-slider-range { background: #ef2929; }
+    #red .ui-slider-handle { border-color: #ef2929; }
+    #green .ui-slider-range { background: #8ae234; }
+    #green .ui-slider-handle { border-color: #8ae234; }
+    #blue .ui-slider-range { background: #729fcf; }
+    #blue .ui-slider-handle { border-color: #729fcf; }
   '''
 
   @view index: ->
@@ -217,6 +243,44 @@ require('zappa') ->
     span id:'redo', 'Redo'
     a href:'#/draw', 'Draw'
     a href:'#/text', 'Text'
+
+    div id:'colorpicker', ->
+      div id:'red'
+      div id:'green'
+      div id:'blue'
+
+      div id:'swatch', class:'ui-widget-content ui-corner-all'
+
+      coffeescript ->
+        hexFromRGB = (r, g, b) ->
+          hex = [
+            r.toString( 16 )
+            g.toString( 16 )
+            b.toString( 16 )
+          ]
+          $.each hex, ( nr, val ) ->
+            if val.length is 1
+              hex[ nr ] = "0" + val
+          return hex.join( "" ).toUpperCase()
+        refreshSwatch = ->
+          red   = $( "#red"   ).slider( "value" )
+          green = $( "#green" ).slider( "value" )
+          blue  = $( "#blue"  ).slider( "value" )
+          hex = hexFromRGB( red, green, blue )
+          $( "#swatch" ).css( "background-color", "#" + hex )
+          $( "#swatch" ).data 'value', hex
+        $ ->
+          $( "#red, #green, #blue" ).slider
+            orientation: "horizontal"
+            range: "min"
+            max: 255
+            value: 127
+            slide: refreshSwatch,
+            change: refreshSwatch
+          $( "#red" ).slider( "value", 255 )
+          $( "#green" ).slider( "value", 140 )
+          $( "#blue" ).slider( "value", 60 )
+
 
     form ->
       input id: 'box'
