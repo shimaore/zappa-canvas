@@ -66,7 +66,7 @@ require('zappa') ->
     @client.nickname = @data.nickname
     roster[@id] = @data.nickname
     console.log "#{@client.nickname} connected"
-    @broadcast roster: {roster: nickname for nickname of roster}
+    @broadcast roster: {roster:roster}
     @broadcast log: {text: "#{@client.nickname} connected"}
     @emit      log: {text: "#{@client.nickname} connected"}
 
@@ -161,7 +161,7 @@ require('zappa') ->
 
     @on roster: ->
       $('#roster').html '<ul>'+
-        ("<li>#{nickname}</li>" for nickname in @data.roster) +
+        ("<li>#{nickname}</li>" for id, nickname of @data.roster).join('') +
         '</ul>'
 
     @get '#/': =>
