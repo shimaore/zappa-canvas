@@ -19,6 +19,7 @@ require('zappa') ->
 
   @on disconnect: ->
     console.log "Client #{@id} disconnected"
+    @broadcast log: {text:"#{@client.nickname} disconnected."}
     delete @client.nickname
 
   @on 'canvas clear': ->
