@@ -11,6 +11,7 @@ require('zappa') ->
   # TODO Load from storage at startup
   history = [{do:'wipe'}]
   redo = []
+  roster = {}
 
   # Canvas server
   @on connection: ->
@@ -18,6 +19,7 @@ require('zappa') ->
     console.log "Client #{@id} connected"
     if not @client.nickname?
       @emit 'request nickname': {}
+    roster[@id] = @client.nickname or '(unknown)'
     @emit 'run commands': {commands:history}
 
   @on disconnect: ->
@@ -62,7 +64,9 @@ require('zappa') ->
   # Chat Server (based on zappa's chat example)
   @on 'set nickname': ->
     @client.nickname = @data.nickname
+    roster[@id] = @data.nickname
     console.log "#{@client.nickname} connected"
+    @broadcast roster: {roster: nickname for nickname of roster}
     @broadcast log: {text: "#{@client.nickname} connected"}
     @emit      log: {text: "#{@client.nickname} connected"}
 
@@ -154,6 +158,11 @@ require('zappa') ->
 
     @on 'request nickname': ->
       @emit 'set nickname': {nickname: prompt 'Pick a nickname!'}
+
+    @on roster: ->
+      $('#roster').html '<ul>'+
+        ("<li>#{nickname}</li>" for nickname in @data.roster) +
+        '</ul>'
 
     @get '#/': =>
 
@@ -300,3 +309,5 @@ require('zappa') ->
         input id: 'box'
         button 'Send'
       div id:'log'
+
+    div id:'roster'
