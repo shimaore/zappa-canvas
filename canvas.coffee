@@ -159,6 +159,12 @@ require('zappa') ->
     @get '#/clear': =>
       @emit 'canvas clear': {}
 
+    @get '#/undo': =>
+      @emit 'canvas undo': {}
+
+    @get '#/redo': =>
+      @emit 'canvas redo': {}
+
     @get '#/draw': ->
       # Select drawing tool
 
@@ -190,6 +196,8 @@ require('zappa') ->
       canvas width:1000, height:300, id:'canvas'
 
     a href:'#/clear', 'Clear'
+    a href:'#/undo', 'Undo'
+    a href:'#/redo', 'Redo'
     a href:'#/draw', 'Draw'
     a href:'#/text', 'Text'
 
