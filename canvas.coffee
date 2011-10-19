@@ -162,12 +162,10 @@ require('zappa') ->
         render_command do:'line',from:from,to:to
 
       $('#undo').click =>
-        console.log 'undo'
         @emit 'canvas undo': {}
         return false
 
       $('#redo').click =>
-        console.log 'redo'
         @emit 'canvas redo': {}
         return false
 
