@@ -221,7 +221,14 @@ require('zappa') ->
     a, span#undo, span#redo { margin: 2px; }
     .author { font-style: italic; }
     .message { font-weight: bold; }
-    #roster { float: right; }
+    #chat {
+      background-color: #f6f8ff;
+    }
+    #roster {
+      float: right;
+      clear: right;
+      background-color: #f2ffe7;
+    }
 
     /* colorpicker */
     #colorpicker {
