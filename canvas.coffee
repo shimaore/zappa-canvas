@@ -209,7 +209,7 @@ require('zappa') ->
     .message { font-weight: bold; }
 
     /* colorpicker */
-    #colorpicker: {
+    #colorpicker {
       float: right;
     }
     #red, #green, #blue {
