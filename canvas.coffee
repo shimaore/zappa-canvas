@@ -16,6 +16,8 @@ require('zappa') ->
   @on connection: ->
     # Update the newly-connected client with history
     console.log "Client #{@id} connected"
+    if not @client.nickname?
+      @emit 'request nickname': {}
     @emit 'run commands': {commands:history}
 
   @on disconnect: ->
@@ -150,6 +152,9 @@ require('zappa') ->
         <span class="message">#{@data.text}</span>
       """
 
+    @on 'request nickname': ->
+      @emit 'set nickname': {nickname: prompt 'Pick a nickname!'}
+
     @get '#/': =>
 
       # Whiteboard
@@ -177,8 +182,6 @@ require('zappa') ->
         return false
 
       # Chat
-      @emit 'set nickname': {nickname: prompt 'Pick a nickname!'}
-
       $('#box').focus()
 
       $('button').click (e) =>
