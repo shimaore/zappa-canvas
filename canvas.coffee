@@ -26,6 +26,8 @@ require('zappa') ->
     console.log "Client #{@id} disconnected"
     @broadcast log: {text:"#{@client.nickname} disconnected."}
     delete @client.nickname
+    delete roster[@id]
+    @broadcast roster: {roster:roster}
 
   @on 'canvas clear': ->
     history = [{do:'wipe'}]
