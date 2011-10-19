@@ -56,6 +56,7 @@ require('zappa') ->
 
     # See http://www.williammalone.com/articles/create-html5-canvas-javascript-drawing-app/
     $.fn.draw = (cb) ->
+      precision = 2
       paint = false
       last_point = null
       @mousedown (e) ->
@@ -72,6 +73,8 @@ require('zappa') ->
           point =
             x: e.pageX - @offsetLeft
             y: e.pageY - @offsetTop
+          if -precision <= x <= precision or -precision <= y <= precision
+            return
           cb last_point, point
           last_point = point
 
