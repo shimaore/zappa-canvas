@@ -236,8 +236,8 @@ require('zappa') ->
     @stylesheets = ['/index']
 
     # Jquery UI (colorpicker)
-    push @scripts, 'js/jquery-ui-1.8.16.custom.min'
-    push @stylesheets, 'css/smoothness/jquery-ui-1.8.16.custom'
+    @scripts.push 'js/jquery-ui-1.8.16.custom.min'
+    @stylesheets.push 'css/smoothness/jquery-ui-1.8.16.custom'
 
     h1 @title
     div class:'board', ->
