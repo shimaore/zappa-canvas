@@ -24,7 +24,7 @@ require('zappa') ->
     @emit      log: {text:"Cleared by #{@client.nickname}!"}
 
   @on 'canvas line': ->
-    command = do:'line',from:@data.from,to:@data.to
+    command = do:'line',from:@data.from,to:@data.to,author:@client.nickname
     history.push command
     @broadcast 'run commands': {commands:[command]}
 
