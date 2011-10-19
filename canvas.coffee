@@ -73,7 +73,9 @@ require('zappa') ->
           point =
             x: e.pageX - @offsetLeft
             y: e.pageY - @offsetTop
-          if -precision <= x <= precision or -precision <= y <= precision
+          dx = point.x - last_point.x
+          dy = point.y - last_point.y
+          if -precision <= dx <= precision or -precision <= dy <= precision
             return
           cb last_point, point
           last_point = point
