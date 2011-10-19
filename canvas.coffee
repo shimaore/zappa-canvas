@@ -9,6 +9,7 @@ require('zappa') ->
 
   # TODO Load from storage at startup
   history = [{do:'wipe'}]
+  redo = []
 
   # Canvas server
   @on connection: ->
