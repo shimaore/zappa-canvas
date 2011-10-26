@@ -117,16 +117,11 @@ require('zappa') ->
       @mouseleave end_point
 
       # Single-finger drawing
-      if @touchstart
-        @touchstart start_point
-      if @touchmove
-        @touchmove move_point
-      if @touchend
-        @touchend end_point
-      if @touchcancel
-        @touchcancel end_point
-      if @touchleave
-        @touchleave end_point
+      @.addEventListener 'touchstart', start_point, false
+      @.addEventListener 'touchmove', move_point, false
+      @.addEventListener 'touchend', end_point, false
+      @.addEventListener 'touchcancel', end_point, false
+      @.addEventListener 'touchleave', end_point, false
 
     canvas_ctx = null
     canvas_width = null
