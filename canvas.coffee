@@ -111,31 +111,22 @@ require('zappa') ->
       end_point = (e) ->
         paint = false
 
-      @mousedown (e) ->
-        start_point(e)
-      @mousemove (e) ->
-        move_point(e)
-      @mouseup (e) ->
-        end_point(e)
-      @mouseleave (e) ->
-        end_point(e)
+      @mousedown start_point
+      @mousemove move_point
+      @mouseup end_point
+      @mouseleave end_point
 
       # Single-finger drawing
       if @touchstart
-        @touchstart (e) ->
-          start_point(e)
+        @touchstart start_point
       if @touchmove
-        @touchmove (e) ->
-          move_point(e)
+        @touchmove move_point
       if @touchend
-        @touchend (e) ->
-          end_point(e)
+        @touchend end_point
       if @touchcancel
-        @touchcancel (e) ->
-          end_point(e)
+        @touchcancel end_point
       if @touchleave
-        @touchleave (e) ->
-          end_point(e)
+        @touchleave end_point
 
     canvas_ctx = null
     canvas_width = null
