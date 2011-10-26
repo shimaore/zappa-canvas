@@ -86,7 +86,8 @@ require('zappa') ->
       precision = 2
       paint = false
       last_point = null
-      @mousedown (e) ->
+
+      start_point = (e) ->
         point =
           x: e.pageX - @offsetLeft
           y: e.pageY - @offsetTop
@@ -95,7 +96,7 @@ require('zappa') ->
         cb point, point
         last_point = point
 
-      @mousemove (e) ->
+      move_point = (e) ->
         if paint
           point =
             x: e.pageX - @offsetLeft
@@ -107,11 +108,34 @@ require('zappa') ->
           cb last_point, point
           last_point = point
 
-      @mouseup (e) ->
+      end_point = (e) ->
         paint = false
 
+      @mousedown (e) ->
+        start_point(e)
+      @mousemove (e) ->
+        move_point(e)
+      @mouseup (e) ->
+        end_point(e)
       @mouseleave (e) ->
-        paint = false
+        end_point(e)
+
+      # Single-finger drawing
+      if @touchstart
+        @touchstart (e) ->
+          start_point(e)
+      if @touchmove
+        @touchmove (e) ->
+          move_point(e)
+      if @touchend
+        @touchend (e) ->
+          end_point(e)
+      if @touchcancel
+        @touchcancel (e) ->
+          end_point(e)
+      if @touchleave
+        @touchleave (e) ->
+          end_point(e)
 
     canvas_ctx = null
     canvas_width = null
