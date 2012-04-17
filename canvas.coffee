@@ -1,6 +1,6 @@
 #!/usr/bin/env coffee
 
-require('zappa') ->
+require('zappajs') ->
   @enable 'default layout', 'serve jquery',
     'serve sammy' # , 'minify'
   @use 'static'
